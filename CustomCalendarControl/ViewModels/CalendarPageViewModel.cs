@@ -15,6 +15,8 @@ namespace CustomCalendarControl.ViewModels
     public class CalendarPageViewModel : INotifyPropertyChanged
     {
         #region Properties & Event
+        public CalendarTheme CalendarTheme { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         int MaxYear;
@@ -76,8 +78,9 @@ namespace CustomCalendarControl.ViewModels
         #endregion
 
         #region Constructor
-        public CalendarPageViewModel(DateTime _selectedDate)
+        public CalendarPageViewModel(DateTime _selectedDate,  CalendarTheme calendarTheme )
         {
+            CalendarTheme = calendarTheme;
             AddDates();
             BindDates(_selectedDate.Year, _selectedDate.Month, _selectedDate.ToString("MMM"), _selectedDate);
         }

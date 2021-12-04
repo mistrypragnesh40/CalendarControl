@@ -1,4 +1,5 @@
-﻿using CustomCalendarControl.ViewModels;
+﻿using CustomCalendarControl.Models;
+using CustomCalendarControl.ViewModels;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,14 @@ namespace CustomCalendarControl.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CalendarPage : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public CalendarPage(DateTime date)
+        public CalendarPage(DateTime date, CalendarTheme calendarTheme)
         {
             InitializeComponent();
-            this.BindingContext = new CalendarPageViewModel(date);
+            if (calendarTheme == null)
+            {
+                calendarTheme = new CalendarTheme();
+            }
+            this.BindingContext = new CalendarPageViewModel(date, calendarTheme);
         }
         private void TapGestureRecognizer_Tapped_ForCancelDate(object sender, EventArgs e)
         {

@@ -34,16 +34,16 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Label LineHeight="1.2" Grid.Row="0" BackgroundColor="Orange" Padding="15,15,5,15" >
+                <Label LineHeight="1.2" Grid.Row="0" BackgroundColor="{Binding CalendarTheme.HeaderBackgroundColor}" Padding="15,15,5,15" >
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="{Binding CurrentYear}" TextColor="White" FontSize="18" >
+                            <Span Text="{Binding CurrentYear}" TextColor="{Binding CalendarTheme.HeaderTextColor}" FontSize="18" >
                                 <Span.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding ShowYearListCommand}"/>
                                 </Span.GestureRecognizers>
                             </Span>
                             <Span Text="{x:Static system:Environment.NewLine}" />
-                            <Span Text="{Binding SelectedDateInString}" TextColor="White" />
+                            <Span Text="{Binding SelectedDateInString}" TextColor="{Binding CalendarTheme.HeaderTextColor}" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -71,7 +71,7 @@
                         </DataTrigger>
                     </ScrollView.Triggers>
                 </ScrollView>
-               
+
                 <StackLayout Grid.Row="2" Padding="0" IsVisible="{Binding IsCalendarDetailsVisible}">
                     <Grid  ColumnDefinitions="34,34,34,34,34,34,34" IsVisible="{Binding IsCalendarDetailsVisible}" Margin="30,0,0,0"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
                         <Label FontSize="12" Text="S" Grid.Row="1" TextColor="Red"  Grid.Column="0" />
@@ -82,13 +82,13 @@
                         <Label FontSize="12" Text="F" Grid.Row="1" TextColor="Gray" Grid.Column="5"/>
                         <Label FontSize="12" Text="S" Grid.Row="1" TextColor="Gray" Grid.Column="6"/>
 
-                        <Label VerticalTextAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" TextColor="Black"  Text="&lt;" FontSize="25"   HorizontalTextAlignment="Start" >
+                        <Label VerticalTextAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" TextColor="{Binding CalendarTheme.LeftRightArrowColor}"  Text="&lt;" FontSize="25"   HorizontalTextAlignment="Start" >
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding PreviousMonthCommand}" />
                             </Label.GestureRecognizers>
                         </Label>
-                        <Label VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" FontSize="13" FontAttributes="Bold"  HorizontalTextAlignment="Start" HorizontalOptions="CenterAndExpand" Text="{Binding CurrentMonthYear}"   TextColor="Black" />
-                        <Label VerticalTextAlignment="Center"  HorizontalTextAlignment="Center" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" TextColor="Black"  Text="&gt;" FontSize="25"  >
+                        <Label VerticalTextAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" FontSize="13" FontAttributes="Bold"  HorizontalTextAlignment="Start" HorizontalOptions="CenterAndExpand" Text="{Binding CurrentMonthYear}"   TextColor="{Binding CalendarTheme.MonthColor}" />
+                        <Label VerticalTextAlignment="Center"  HorizontalTextAlignment="Center" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" TextColor="{Binding CalendarTheme.LeftRightArrowColor}"  Text="&gt;" FontSize="25"  >
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding NextMonthCommand}" />
                             </Label.GestureRecognizers>
@@ -113,13 +113,13 @@
                                     <Label FontSize="12" TextColor="Black"   Text="{Binding DateInNumberStr}" VerticalTextAlignment="Center"  HorizontalTextAlignment="Center" >
                                         <Label.Triggers>
                                             <DataTrigger TargetType="Label" Binding="{Binding CurrentDate}" Value="True">
-                                                <Setter Property="TextColor" Value="White" />
+                                                <Setter Property="TextColor" Value="{Binding Source={x:Reference this},Path=BindingContext.CalendarTheme.SelectedDateTextColor}" />
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>
                                     <Frame.Triggers>
                                         <DataTrigger TargetType="Frame" Binding="{Binding CurrentDate}" Value="True">
-                                            <Setter Property="BackgroundColor" Value="Orange" />
+                                            <Setter Property="BackgroundColor" Value="{Binding Source={x:Reference this},Path=BindingContext.CalendarTheme.SelectedDateBackGroundColor}" />
                                             <Setter Property="CornerRadius" Value="19.5" />
                                         </DataTrigger>
                                         <DataTrigger TargetType="Frame" Binding="{Binding CurrentDate}" Value="False">
@@ -134,12 +134,12 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </StackLayout>
-                <Label Margin="0,0,90,0" Grid.Row="3" FontAttributes="Bold"  x:Name="lblCancelDate" Text="CANCEL" FontSize="17" TextColor="Orange" HorizontalOptions="End" >
+                <Label Margin="0,0,90,0" Grid.Row="3" FontAttributes="Bold"  x:Name="lblCancelDate" Text="CANCEL" FontSize="17" TextColor="{Binding CalendarTheme.CancelButtonTextColor}" HorizontalOptions="End" >
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_ForCancelDate"  CommandParameter="{Binding .}" />
                     </Label.GestureRecognizers>
                 </Label>
-                <Label  Margin="0,0,30,0" Grid.Row="3"  FontAttributes="Bold"  TextColor="Orange" Text="OK" x:Name="lblSelectDate"  FontSize="17" HorizontalOptions="End"  >
+                <Label  Margin="0,0,30,0" Grid.Row="3"  FontAttributes="Bold"  TextColor="{Binding CalendarTheme.OkayButtonTextColor}" Text="OK" x:Name="lblSelectDate"  FontSize="17" HorizontalOptions="End"  >
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_ForSelectDate" CommandParameter="{Binding .}" />
                     </Label.GestureRecognizers>

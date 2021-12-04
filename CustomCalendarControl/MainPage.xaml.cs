@@ -18,7 +18,10 @@ namespace CustomCalendarControl
         }
         private async void btnCalendar_Clicked(object sender, System.EventArgs e)
         {
-            var calendarPage = new CalendarPage(DateTime.Now);
+            var calendarPage = new CalendarPage(DateTime.Now, new Models.CalendarTheme
+            {
+                HeaderBackgroundColor = Color.Blue
+            });
             calendarPage.SelectedDateCommand = new Command<DateTime>((item) =>
             {
                 lblDate.Text = item.ToString("dd MMM yyyy");
