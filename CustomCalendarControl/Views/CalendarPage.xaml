@@ -48,28 +48,30 @@
                     </Label.FormattedText>
                 </Label>
 
-                <ListView BackgroundColor="White"  x:Name="lstYear"  HeightRequest="340" WidthRequest="310"  Grid.Row="1"   ItemsSource="{Binding YearList}"  VerticalOptions="FillAndExpand">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="x:Int32">
-                            <ViewCell>
-                                <StackLayout Margin="0,10,0,10">
-                                    <Label HorizontalTextAlignment="Center" Text="{Binding .}" />
-                                    <StackLayout.GestureRecognizers>
+                <ScrollView HeightRequest="340" WidthRequest="310"  Grid.Row="1"  VerticalOptions="FillAndExpand" >
+                    <StackLayout BackgroundColor="White"  x:Name="lstYear"    BindableLayout.ItemsSource="{Binding YearList}" >
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="x:Int32">
+                                <Grid RowSpacing="0" RowDefinitions="50,1">
+                                    <Label VerticalOptions="Center" Grid.Row="0" HorizontalTextAlignment="Center" Text="{Binding .}" />
+                                    <Rectangle HeightRequest="1" BackgroundColor="Gray" Grid.Row="1" />
+                                    <Grid.GestureRecognizers>
                                         <TapGestureRecognizer CommandParameter="{Binding .}" Command="{Binding Source={x:Reference this},Path=BindingContext.YearSelectionCommand}" />
-                                    </StackLayout.GestureRecognizers>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.Triggers>
-                        <DataTrigger TargetType="ListView" Binding="{Binding IsCalendarDetailsVisible}" Value="True">
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <ScrollView.Triggers>
+                        <DataTrigger TargetType="ScrollView" Binding="{Binding IsCalendarDetailsVisible}" Value="True">
                             <Setter Property="IsVisible"  Value="False" />
                         </DataTrigger>
-                        <DataTrigger TargetType="ListView" Binding="{Binding IsCalendarDetailsVisible}" Value="False">
+                        <DataTrigger TargetType="ScrollView" Binding="{Binding IsCalendarDetailsVisible}" Value="False">
                             <Setter Property="IsVisible"  Value="True" />
                         </DataTrigger>
-                    </ListView.Triggers>
-                </ListView>
+                    </ScrollView.Triggers>
+                </ScrollView>
+               
                 <StackLayout Grid.Row="2" Padding="0" IsVisible="{Binding IsCalendarDetailsVisible}">
                     <Grid  ColumnDefinitions="34,34,34,34,34,34,34" IsVisible="{Binding IsCalendarDetailsVisible}" Margin="30,0,0,0"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
                         <Label FontSize="12" Text="S" Grid.Row="1" TextColor="Red"  Grid.Column="0" />

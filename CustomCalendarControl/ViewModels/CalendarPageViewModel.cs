@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace CustomCalendarControl.ViewModels
 {
@@ -94,17 +95,7 @@ namespace CustomCalendarControl.ViewModels
             MaxYear = DateTime.Now.Year + 30;
             MinYear = DateTime.Now.Year - 100;
 
-            if (dummyYearList == null)
-                dummyYearList = new List<int>();
 
-            if (dummyYearList.Count == 0)
-            {
-                for (int year = MinYear; year <= MaxYear; year++)
-                {
-                    dummyYearList.Add(year);
-                }
-            }
-            YearList.AddRange(dummyYearList.OrderByDescending(f => f).ToList());
         }
         public void BindDates(int year, int month, string MonthName, DateTime? newDate)
         {
@@ -268,6 +259,9 @@ namespace CustomCalendarControl.ViewModels
                 {
                     if (item?.DayName != null)
                     {
+                        var allDates = CalendarList.SelectMany(f => f).Select(f => f).ToList();
+                        allDates.ForEach(f => f.CurrentDate = false);
+
                         CurrentDate = item.Date;
                         CurrentYear = item.Date.Year;
                         item.CurrentDate = true;
@@ -375,6 +369,19 @@ namespace CustomCalendarControl.ViewModels
                 {
                     if (CurrentDate != null)
                     {
+                        if (dummyYearList == null)
+                            dummyYearList = new List<int>();
+
+                        if (dummyYearList.Count == 0)
+                        {
+                            for (int year = MinYear; year <= MaxYear; year++)
+                            {
+                                dummyYearList.Add(year);
+                            }
+                        }
+                        if (YearList.Count == 0)
+                            YearList.AddRange(dummyYearList.OrderByDescending(f => f).ToList());
+
                         IsCalendarDetailsVisible = !IsCalendarDetailsVisible;
                     }
                 });
